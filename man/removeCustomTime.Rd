@@ -7,7 +7,7 @@
 removeCustomTime(id, itemId)
 }
 \arguments{
-\item{id}{Timeline id}
+\item{id}{Timeline id or a \code{timevis} object (the output from \code{timevis()})}
 
 \item{itemId}{The id of the custom time bar}
 }
@@ -15,6 +15,12 @@ removeCustomTime(id, itemId)
 Remove a custom time previously added
 }
 \examples{
+
+timevis() \%>\%
+  addCustomTime(Sys.Date() - 1, "yesterday") \%>\%
+  addCustomTime(Sys.Date() + 1, "tomorrow") \%>\%
+  removeCustomTime("yesterday")
+
 if (interactive()) {
 library(shiny)
 shinyApp(

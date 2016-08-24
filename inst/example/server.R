@@ -1,15 +1,7 @@
 library(timevis)
 
 source("sampleData.R")
-
-# generate a random string of 16 characters
-randomID <- function() {
-  paste(sample(c(letters, LETTERS, 0:9), 16, replace = TRUE), collapse = "")
-}
-
-prettyDate <- function(d) {
-  suppressWarnings(format(as.POSIXct(gsub("T", " ", d), "%Y-%m-%d %H:%M")))
-}
+source("utils.R")
 
 function(input, output, session) {
   output$timelineBasic <- renderTimevis({
@@ -18,6 +10,10 @@ function(input, output, session) {
 
   output$timelineWC <- renderTimevis({
     timevis(dataWC)
+  })
+
+  output$timelineGroups <- renderTimevis({
+    timevis(data = dataGroups, groups = groups, options = list(editable = TRUE))
   })
 
   output$timelineCustom <- renderTimevis({
@@ -36,8 +32,7 @@ function(input, output, session) {
       editable = TRUE,
       multiselect = TRUE
     )
-    timevis(dataBasic, getSelected = TRUE, getData = TRUE, getIds = TRUE,
-                getWindow = TRUE, options = config)
+    timevis(dataBasic, options = config)
   })
 
   output$selected <- renderText(

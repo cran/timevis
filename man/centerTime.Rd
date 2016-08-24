@@ -7,7 +7,7 @@
 centerTime(id, time, options)
 }
 \arguments{
-\item{id}{Timeline id}
+\item{id}{Timeline id or a \code{timevis} object (the output from \code{timevis()})}
 
 \item{time}{The date/time to center around}
 
@@ -21,6 +21,10 @@ Timeline documentation}}
 Move the window such that the given time is centered
 }
 \examples{
+
+timevis() \%>\%
+  centerTime(Sys.Date() - 1)
+
 if (interactive()) {
 library(shiny)
 shinyApp(
@@ -33,7 +37,7 @@ shinyApp(
       timevis()
     )
     observeEvent(input$btn, {
-      centerTime("timeline", Sys.Date())
+      centerTime("timeline", Sys.Date() - 1)
     })
   }
 )

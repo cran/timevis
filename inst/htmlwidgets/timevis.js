@@ -15,46 +15,44 @@ HTMLWidgets.widget({
     var elementId = el.id;
     var container = document.getElementById(elementId);
     var timeline = new vis.Timeline(container, [], {});
+    var initialized = false;
 
     return {
 
-      renderValue: function(x) {
+      renderValue: function(opts) {
         // alias this
         var that = this;
 
-        // attach the timeline object to the DOM
-        container.timeline = timeline;
+        if (!initialized) {
+          initialized = true;
 
-        // set the data items
-        timeline.itemsData.add(x.items);
-        timeline.fit({ animation : false });
+          // attach the timeline object and the widget to the DOM
+          container.timeline = timeline;
+          container.widget = that;
 
-        // Show and initialize the zoom buttons
-        if (x.showZoom) {
+          // Set up the zoom button click listeners
           var zoomMenu = container.getElementsByClassName("zoom-menu")[0];
-          zoomMenu.className += " show-zoom";
           zoomMenu.getElementsByClassName("zoom-in")[0]
-            .onclick = function(ev) { that.zoomIn(x.zoomFactor); };
+            .onclick = function(ev) { that.zoomIn(opts.zoomFactor); };
           zoomMenu.getElementsByClassName("zoom-out")[0]
-            .onclick = function(ev) { that.zoomOut(x.zoomFactor); };
-        }
+            .onclick = function(ev) { that.zoomOut(opts.zoomFactor); };
 
-        // set listeners to events the user wants to know about
-        if (HTMLWidgets.shinyMode){
-          if (x.getSelected) {
+          // set listeners to events and pass data back to Shiny
+          if (HTMLWidgets.shinyMode) {
+
+            // Items have been manually selected
             timeline.on('select', function (properties) {
               Shiny.onInputChange(
                 elementId + "_selected",
                 properties.items
               );
             });
-            // Also send the initial data when the widget starts
             Shiny.onInputChange(
               elementId + "_selected",
               timeline.getSelection()
             );
-          }
-          if (x.getWindow) {
+
+            // The range of the window has changes (by dragging or zooming)
             timeline.on('rangechanged', function (properties) {
               Shiny.onInputChange(
                 elementId + "_window",
@@ -65,8 +63,8 @@ HTMLWidgets.widget({
               elementId + "_window",
               [timeline.getWindow().start, timeline.getWindow().end]
             );
-          }
-          if (x.getData) {
+
+            // The data in the timeline has changed
             timeline.itemsData.on('*', function (event, properties, senderId) {
               Shiny.onInputChange(
                 elementId + "_data" + ":timevisDF",
@@ -77,8 +75,8 @@ HTMLWidgets.widget({
               elementId + "_data" + ":timevisDF",
               timeline.itemsData.get()
             );
-          }
-          if (x.getIds) {
+
+            // An item was added or removed, send back the list of IDs
             timeline.itemsData.on('add', function (event, properties, senderId) {
               Shiny.onInputChange(
                 elementId + "_ids",
@@ -98,15 +96,46 @@ HTMLWidgets.widget({
           }
         }
 
+        // set the data items and groups
+        timeline.itemsData.clear();
+        timeline.itemsData.add(opts.items);
+        timeline.setGroups(opts.groups);
+
+        // fit the items on the timeline
+        if (opts.fit) {
+          timeline.fit({ animation : false });
+        }
+
+        // Show or hide the zoom button
+        var zoomMenu = container.getElementsByClassName("zoom-menu")[0];
+        if (opts.showZoom) {
+          zoomMenu.setAttribute("data-show-zoom", true);
+        } else {
+          zoomMenu.removeAttribute("data-show-zoom");
+        }
+
         // set the custom configuration options
-        if (Array === x.options.constructor) {
-          x['options'] = {};
+        if (Array === opts.options.constructor) {
+          opts['options'] = {};
         }
-        if (x['height'] !== null &&
-            typeof x['options']['height'] === "undefined") {
-          x['options']['height'] = x['height'];
+        if (opts['height'] !== null &&
+            typeof opts['options']['height'] === "undefined") {
+          opts['options']['height'] = opts['height'];
         }
-        timeline.setOptions(x.options);
+        timeline.setOptions(opts.options);
+
+        // Now that the timeline is initialized, call any outstanding API
+        // functions that the user wantd to run on the timeline before it was
+        // ready
+        var numApiCalls = opts['api'].length;
+        for (var i = 0; i < numApiCalls; i++) {
+          var call = opts['api'][i];
+          var method = call.method;
+          delete call['method'];
+          try {
+            that[method](call);
+          } catch(err) {}
+        }
       },
 
       resize : function(width, height) {
@@ -154,111 +183,76 @@ HTMLWidgets.widget({
       },
 
       // export the timeline object for others to use if they want to
-      timeline : timeline
+      timeline : timeline,
+
+      /* API functions that manipulate a timeline's data */
+      addItem : function(params) {
+        timeline.itemsData.add(params.data);
+      },
+      addItems : function(params) {
+        timeline.itemsData.add(params.data);
+      },
+      removeItem : function(params) {
+        timeline.itemsData.remove(params.itemId);
+      },
+      addCustomTime : function(params) {
+        timeline.addCustomTime(params.time, params.itemId);
+      },
+      removeCustomTime : function(params) {
+        timeline.removeCustomTime(params.itemId);
+      },
+      fitWindow : function(params) {
+        timeline.fit(params.options);
+      },
+      centerTime : function(params) {
+        timeline.moveTo(params.time, params.options);
+      },
+      centerItem : function(params) {
+        timeline.focus(params.itemId, params.options);
+      },
+      setItems : function(params) {
+        timeline.itemsData.clear();
+        timeline.itemsData.add(params.data);
+      },
+      setGroups : function(params) {
+        timeline.groupsData.clear();
+        timeline.groupsData.add(params.data);
+      },
+      setOptions : function(params) {
+        timeline.setOptions(params.options);
+      },
+      setSelection : function(params) {
+        timeline.setSelection(params.itemId, params.options);
+      },
+      setWindow : function(params) {
+        timeline.setWindow(params.start, params.end, params.options);
+      }
     };
   }
 });
 
 // Attach message handlers if in shiny mode (these correspond to API)
-if (HTMLWidgets.shinyMode){
+if (HTMLWidgets.shinyMode) {
+  var fxns =
+    ['addItem', 'addItems', 'removeItem', 'addCustomTime', 'removeCustomTime',
+     'fitWindow', 'centerTime', 'centerItem', 'setItems', 'setGroups',
+     'setOptions', 'setSelection', 'setWindow'];
 
-  Shiny.addCustomMessageHandler(
-    "timevis:addItem", function(message) {
-      var el = document.getElementById(message.id);
-      if (el) {
-        el.timeline.itemsData.add(message.data);
-      }
-  });
+  var addShinyHandler = function(fxn) {
+    return function() {
+      Shiny.addCustomMessageHandler(
+        "timevis:" + fxn, function(message) {
+          var el = document.getElementById(message.id);
+          if (el) {
+            delete message['id'];
+            el.widget[fxn](message);
+          }
+        }
+      );
+    }
+  };
 
-  Shiny.addCustomMessageHandler(
-    "timevis:addItems", function(message) {
-      var el = document.getElementById(message.id);
-      if (el) {
-        var items = message.data;
-        el.timeline.itemsData.add(items);
-      }
-  });
-
-  Shiny.addCustomMessageHandler(
-    "timevis:removeItem", function(message) {
-      var el = document.getElementById(message.id);
-      if (el) {
-        el.timeline.itemsData.remove(message.itemId);
-      }
-  });
-
-  Shiny.addCustomMessageHandler(
-    "timevis:addCustomTime", function(message) {
-      var el = document.getElementById(message.id);
-      if (el) {
-        el.timeline.addCustomTime(message.time, message.itemId);
-      }
-  });
-
-  Shiny.addCustomMessageHandler(
-    "timevis:removeCustomTime", function(message) {
-      var el = document.getElementById(message.id);
-      if (el) {
-        el.timeline.removeCustomTime(message.itemId);
-      }
-  });
-
-  Shiny.addCustomMessageHandler(
-    "timevis:fitWindow", function(message) {
-      var el = document.getElementById(message.id);
-      if (el) {
-        el.timeline.fit(message.options);
-      }
-  });
-
-  Shiny.addCustomMessageHandler(
-    "timevis:centerTime", function(message) {
-      var el = document.getElementById(message.id);
-      if (el) {
-        el.timeline.moveTo(message.time, message.options);
-      }
-  });
-
-  Shiny.addCustomMessageHandler(
-    "timevis:centerItem", function(message) {
-      var el = document.getElementById(message.id);
-      if (el) {
-        el.timeline.focus(message.itemId, message.options);
-      }
-  });
-
-  Shiny.addCustomMessageHandler(
-    "timevis:setItems", function(message) {
-      var el = document.getElementById(message.id);
-      if (el) {
-        el.timeline.itemsData.clear();
-        var items = message.data;
-        el.timeline.itemsData.add(items);
-      }
-  });
-
-  Shiny.addCustomMessageHandler(
-    "timevis:setOptions", function(message) {
-      var el = document.getElementById(message.id);
-      if (el) {
-        el.timeline.setOptions(message.options);
-      }
-  });
-
-  Shiny.addCustomMessageHandler(
-    "timevis:setSelection", function(message) {
-      var el = document.getElementById(message.id);
-      if (el) {
-        el.timeline.setSelection(message.itemId, message.options);
-      }
-  });
-
-  Shiny.addCustomMessageHandler(
-    "timevis:setWindow", function(message) {
-      var el = document.getElementById(message.id);
-      if (el) {
-        el.timeline.setWindow(message.start, message.end, message.options);
-      }
-  });
-
+  for (var i = 0; i < fxns.length; i++) {
+    addShinyHandler(fxns[i])();
+  }
 }

@@ -7,7 +7,7 @@
 centerItem(id, itemId, options)
 }
 \arguments{
-\item{id}{Timeline id}
+\item{id}{Timeline id or a \code{timevis} object (the output from \code{timevis()})}
 
 \item{itemId}{A vector (or single value) of the item ids to center}
 
@@ -21,6 +21,14 @@ Timeline documentation}}
 Move the window such that given item or items are centered
 }
 \examples{
+
+timevis(data.frame(
+          id = 1:3,
+          start = c(Sys.Date() - 1, Sys.Date(), Sys.Date() + 1),
+          content = c("Item 1", "Item 2", "Item 3"))
+) \%>\%
+  centerItem(1)
+
 if (interactive()) {
 library(shiny)
 shinyApp(

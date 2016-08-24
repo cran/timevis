@@ -7,7 +7,7 @@
 setWindow(id, start, end, options)
 }
 \arguments{
-\item{id}{Timeline id}
+\item{id}{Timeline id or a \code{timevis} object (the output from \code{timevis()})}
 
 \item{start}{The start date/time to show in the timeline}
 
@@ -23,6 +23,10 @@ Timeline documentation}}
 Set the current visible window
 }
 \examples{
+
+timevis() \%>\%
+  setWindow(Sys.Date() - 1, Sys.Date() + 1)
+
 if (interactive()) {
 library(shiny)
 shinyApp(

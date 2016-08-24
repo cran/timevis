@@ -7,7 +7,7 @@
 setSelection(id, itemId, options)
 }
 \arguments{
-\item{id}{Timeline id}
+\item{id}{Timeline id or a \code{timevis} object (the output from \code{timevis()})}
 
 \item{itemId}{A vector (or single value) of the item ids to select}
 
@@ -22,6 +22,10 @@ Timeline documentation}}
 Select one or multiple items on a timeline
 }
 \examples{
+
+timevis(data.frame(id = 1:3, start = Sys.Date(), content = 1:3)) \%>\%
+  setSelection(2)
+
 if (interactive()) {
 library(shiny)
 shinyApp(

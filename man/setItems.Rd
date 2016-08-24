@@ -7,7 +7,7 @@
 setItems(id, data)
 }
 \arguments{
-\item{id}{Timeline id}
+\item{id}{Timeline id or a \code{timevis} object (the output from \code{timevis()})}
 
 \item{data}{A dataframe containing the item data to use.}
 }
@@ -15,6 +15,10 @@ setItems(id, data)
 Set the items of a timeline
 }
 \examples{
+
+timevis(data.frame(start = Sys.Date(), content = "Today")) \%>\%
+  setItems(data.frame(start = Sys.Date() - 1, content = "yesterday"))
+
 if (interactive()) {
 library(shiny)
 shinyApp(

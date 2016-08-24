@@ -7,7 +7,7 @@
 addItems(id, data)
 }
 \arguments{
-\item{id}{Timeline id}
+\item{id}{Timeline id or a \code{timevis} object (the output from \code{timevis()})}
 
 \item{data}{A dataframe containing the items data to add.}
 }
@@ -15,6 +15,11 @@ addItems(id, data)
 Add multiple items to a timeline
 }
 \examples{
+
+timevis() \%>\%
+  addItems(data.frame(start = c(Sys.Date(), Sys.Date() - 1),
+           content = c("Today", "Yesterday")))
+
 if (interactive()) {
 library(shiny)
 shinyApp(
