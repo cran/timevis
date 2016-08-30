@@ -1,3 +1,9 @@
+# timevis 0.3
+
+#### Misc
+
+- Added VignetteBuilder field to DESCRIPTION file as per CRAN's request
+
 # timevis 0.2
 
 ### Breaking changes

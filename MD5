@@ -1,13 +1,17 @@
-5c50943beaad6aaa0ed49c508106402b *DESCRIPTION
+08a31572bb896796e62b97f18bd99556 *DESCRIPTION
 8b2b1007572dd48f059d0201d114a3aa *LICENSE
 d88405d7b019ed3e45f9f34f3ddfaea1 *NAMESPACE
-71ac81c6398721b64eded2fbd3a24f61 *NEWS.md
+591ca77d400f6b2101e5fd158d1dee35 *NEWS.md
 1c7382ea554084c8ead9f013c6e05646 *R/api.R
 1d074c851c68ef3c3a4e194916b839de *R/runExample.R
 c4e0b2f9607b41b4427432d6b672ce6c *R/timevis-package.R
 457023e3e8cb2098be30a58a5e5b05e6 *R/timevis.R
 2db2471901ca8271cc05fdf77243f783 *R/utils.R
-0cd71e783432a54089fdad5918bab21d *README.md
+925c07e42f319bb440d48f2cda49404d *README.md
+57939ea79881ea381e30e0696b1e6c78 *build/vignette.rds
+83bb5dee56f14359ad78f13ceef07f0f *inst/doc/overview.R
+6cdff103d4d7ed136c699c6f328fefba *inst/doc/overview.Rmd
+6125b1b3c824f59e1bf903efccc35f2f *inst/doc/overview.html
 aa07059d9d8169243d6307ab2931d4a1 *inst/example/sampleData.R
 eef24dbbaccf9daf1fd8149f2089173d *inst/example/server.R
 1aea21848de9ff67e10642d4978e4a26 *inst/example/ui-helpers.R
@@ -29,7 +33,7 @@ a5e723d05ad9289a376a0ada1fccb030 *inst/htmlwidgets/lib/vis-timeline-4.16.1/img/t
 005f19fc77c9fa20245007ea04f76d50 *inst/htmlwidgets/lib/vis-timeline-4.16.1/vis.min.css
 cb7b6151f9370aa3feeae44398bb760a *inst/htmlwidgets/timevis.css
 8bd7431994afc0b77dc43eb5212dc32a *inst/htmlwidgets/timevis.js
-7194fa1e954a74ddaf2eedaec03e4f7f *inst/htmlwidgets/timevis.yaml
+daf3cd3d4909ed81351d7896e0f76c76 *inst/htmlwidgets/timevis.yaml
 6de6d1e72ffcddd0d4fe244f5a79075a *inst/img/app.png
 53b86b489be7639118f5215da9bd1b28 *inst/img/basic.png
 5acd3a7141225a5087b47113cbb439f0 *inst/img/customstyle.png
@@ -55,4 +59,4 @@ ee1a62b0800bd764e9b6d17f4d968105 *man/setSelection.Rd
 71c134f87054f098d1dd601e209b5e7d *man/timevis.Rd
 e2e79e547b1f805fcc294c540f622bf5 *tests/testthat.R
 1f5074b19576237a1ddcea45eecc4b56 *tests/testthat/test-dataframeToD3.R
-7fa901467bea0f98f8aa42e57e71e3c2 *vignettes/overview.Rmd
+6cdff103d4d7ed136c699c6f328fefba *vignettes/overview.Rmd
