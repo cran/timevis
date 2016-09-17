@@ -1,6 +1,6 @@
 Package: timevis
 Title: Create Interactive Timeline Visualizations in R
-Version: 0.3
+Version: 0.4
 Authors@R: c(
     person("Dean", "Attali", email = "daattali@gmail.com",
       role = c("aut", "cre"), comment = "R interface"),
@@ -26,10 +26,10 @@ LazyData: true
 VignetteBuilder: knitr
 RoxygenNote: 5.0.1
 NeedsCompilation: no
-Packaged: 2016-08-29 19:05:01 UTC; Dean
+Packaged: 2016-09-16 22:00:03 UTC; Dean
 Author: Dean Attali [aut, cre] (R interface),
   Almende B.V. [aut, cph] (vis.js library, http://visjs.org,
     http://www.almende.com/home)
 Maintainer: Dean Attali <daattali@gmail.com>
 Repository: CRAN
-Date/Publication: 2016-08-30 00:54:33
+Date/Publication: 2016-09-17 01:21:26
