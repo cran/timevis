@@ -7,7 +7,8 @@
 \title{Create a timeline visualization}
 \usage{
 timevis(data, groups, showZoom = TRUE, zoomFactor = 0.5, fit = TRUE,
-  options, width = NULL, height = NULL, elementId = NULL)
+  options, width = NULL, height = NULL, elementId = NULL,
+  loadDependencies = TRUE)
 }
 \arguments{
 \item{data}{A dataframe containing the timeline items. Each item on the
@@ -52,6 +53,10 @@ automatically.}
 
 \item{elementId}{Use an explicit element ID for the widget (rather than an
 automatically generated one). Ignored when used in a Shiny app.}
+
+\item{loadDependencies}{Whether to load JQuery and bootstrap
+dependencies (you should only set to \code{FALSE} if you manually include
+them)}
 }
 \value{
 A timeline visualization \code{htmlwidgets} object
@@ -174,6 +179,18 @@ variables will be available:
 }
 All four inputs will return a value upon initialization of the timeline and
 every time the corresponding value is updated.
+}
+
+\section{Extending timevis}{
+
+If you need to perform any actions on the timeline object that are not
+supported by this package's API, you may be able to do so by manipulating the
+timeline's JavaScript object directly. The timeline object is available via
+\code{document.getElementById(id).widget.timeline} (replace \code{id} with
+the timeline's id).\cr\cr
+This timeline object is the direct widget that \code{vis.js} creates, and you
+can see the \href{http://visjs.org/docs/timeline/}{visjs documentation} to
+see what actions you can perform on that object.
 }
 \examples{
 # For more examples, see http://daattali.com/shiny/timevis-demo/

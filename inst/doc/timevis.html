@@ -4,7 +4,7 @@
 
 <head>
 
-<meta charset="utf-8">
+<meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
@@ -12,54 +12,286 @@
 
 <meta name="author" content="Dean Attali" />
 
-<meta name="date" content="2016-09-16" />
+<meta name="date" content="2019-01-16" />
 
 <title>Package timevis</title>
 
 
 
 <style type="text/css">code{white-space: pre;}</style>
-<style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
 </style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' || rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
 
 
 
-<link href="data:text/css;charset=utf-8,body%7Bbackground%2Dcolor%3A%23fff%3Bmargin%3A1em%20auto%3Bmax%2Dwidth%3A700px%3Boverflow%3Avisible%3Bpadding%2Dleft%3A2em%3Bpadding%2Dright%3A2em%3Bfont%2Dfamily%3A%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3Bfont%2Dsize%3A14px%3Bline%2Dheight%3A1%2E35%7D%23header%7Btext%2Dalign%3Acenter%7D%23TOC%7Bclear%3Aboth%3Bmargin%3A0%200%2010px%2010px%3Bpadding%3A4px%3Bwidth%3A400px%3Bborder%3A1px%20solid%20%23CCCCCC%3Bborder%2Dradius%3A5px%3Bbackground%2Dcolor%3A%23f6f6f6%3Bfont%2Dsize%3A13px%3Bline%2Dheight%3A1%2E3%7D%23TOC%20%2Etoctitle%7Bfont%2Dweight%3Abold%3Bfont%2Dsize%3A15px%3Bmargin%2Dleft%3A5px%7D%23TOC%20ul%7Bpadding%2Dleft%3A40px%3Bmargin%2Dleft%3A%2D1%2E5em%3Bmargin%2Dtop%3A5px%3Bmargin%2Dbottom%3A5px%7D%23TOC%20ul%20ul%7Bmargin%2Dleft%3A%2D2em%7D%23TOC%20li%7Bline%2Dheight%3A16px%7Dtable%7Bmargin%3A1em%20auto%3Bborder%2Dwidth%3A1px%3Bborder%2Dcolor%3A%23DDDDDD%3Bborder%2Dstyle%3Aoutset%3Bborder%2Dcollapse%3Acollapse%7Dtable%20th%7Bborder%2Dwidth%3A2px%3Bpadding%3A5px%3Bborder%2Dstyle%3Ainset%7Dtable%20td%7Bborder%2Dwidth%3A1px%3Bborder%2Dstyle%3Ainset%3Bline%2Dheight%3A18px%3Bpadding%3A5px%205px%7Dtable%2C%20table%20th%2C%20table%20td%7Bborder%2Dleft%2Dstyle%3Anone%3Bborder%2Dright%2Dstyle%3Anone%7Dtable%20thead%2C%20table%20tr%2Eeven%7Bbackground%2Dcolor%3A%23f7f7f7%7Dp%7Bmargin%3A0%2E5em%200%7Dblockquote%7Bbackground%2Dcolor%3A%23f6f6f6%3Bpadding%3A0%2E25em%200%2E75em%7Dhr%7Bborder%2Dstyle%3Asolid%3Bborder%3Anone%3Bborder%2Dtop%3A1px%20solid%20%23777%3Bmargin%3A28px%200%7Ddl%7Bmargin%2Dleft%3A0%7Ddl%20dd%7Bmargin%2Dbottom%3A13px%3Bmargin%2Dleft%3A13px%7Ddl%20dt%7Bfont%2Dweight%3Abold%7Dul%7Bmargin%2Dtop%3A0%7Dul%20li%7Blist%2Dstyle%3Acircle%20outside%7Dul%20ul%7Bmargin%2Dbottom%3A0%7Dpre%2C%20code%7Bbackground%2Dcolor%3A%23f7f7f7%3Bborder%2Dradius%3A3px%3Bcolor%3A%23333%3Bwhite%2Dspace%3Apre%2Dwrap%7Dpre%7Bborder%2Dradius%3A3px%3Bmargin%3A5px%200px%2010px%200px%3Bpadding%3A10px%7Dpre%3Anot%28%5Bclass%5D%29%7Bbackground%2Dcolor%3A%23f7f7f7%7Dcode%7Bfont%2Dfamily%3AConsolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3Bfont%2Dsize%3A85%25%7Dp%20%3E%20code%2C%20li%20%3E%20code%7Bpadding%3A2px%200px%7Ddiv%2Efigure%7Btext%2Dalign%3Acenter%7Dimg%7Bbackground%2Dcolor%3A%23FFFFFF%3Bpadding%3A2px%3Bborder%3A1px%20solid%20%23DDDDDD%3Bborder%2Dradius%3A3px%3Bborder%3A1px%20solid%20%23CCCCCC%3Bmargin%3A0%205px%7Dh1%7Bmargin%2Dtop%3A0%3Bfont%2Dsize%3A35px%3Bline%2Dheight%3A40px%7Dh2%7Bborder%2Dbottom%3A4px%20solid%20%23f7f7f7%3Bpadding%2Dtop%3A10px%3Bpadding%2Dbottom%3A2px%3Bfont%2Dsize%3A145%25%7Dh3%7Bborder%2Dbottom%3A2px%20solid%20%23f7f7f7%3Bpadding%2Dtop%3A10px%3Bfont%2Dsize%3A120%25%7Dh4%7Bborder%2Dbottom%3A1px%20solid%20%23f7f7f7%3Bmargin%2Dleft%3A8px%3Bfont%2Dsize%3A105%25%7Dh5%2C%20h6%7Bborder%2Dbottom%3A1px%20solid%20%23ccc%3Bfont%2Dsize%3A105%25%7Da%7Bcolor%3A%230033dd%3Btext%2Ddecoration%3Anone%7Da%3Ahover%7Bcolor%3A%236666ff%7Da%3Avisited%7Bcolor%3A%23800080%7Da%3Avisited%3Ahover%7Bcolor%3A%23BB00BB%7Da%5Bhref%5E%3D%22http%3A%22%5D%7Btext%2Ddecoration%3Aunderline%7Da%5Bhref%5E%3D%22https%3A%22%5D%7Btext%2Ddecoration%3Aunderline%7Dcode%20%3E%20span%2Ekw%7Bcolor%3A%23555%3Bfont%2Dweight%3Abold%7Dcode%20%3E%20span%2Edt%7Bcolor%3A%23902000%7Dcode%20%3E%20span%2Edv%7Bcolor%3A%2340a070%7Dcode%20%3E%20span%2Ebn%7Bcolor%3A%23d14%7Dcode%20%3E%20span%2Efl%7Bcolor%3A%23d14%7Dcode%20%3E%20span%2Ech%7Bcolor%3A%23d14%7Dcode%20%3E%20span%2Est%7Bcolor%3A%23d14%7Dcode%20%3E%20span%2Eco%7Bcolor%3A%23888888%3Bfont%2Dstyle%3Aitalic%7Dcode%20%3E%20span%2Eot%7Bcolor%3A%23007020%7Dcode%20%3E%20span%2Eal%7Bcolor%3A%23ff0000%3Bfont%2Dweight%3Abold%7Dcode%20%3E%20span%2Efu%7Bcolor%3A%23900%3Bfont%2Dweight%3Abold%7Dcode%20%3E%20span%2Eer%7Bcolor%3A%23a61717%3Bbackground%2Dcolor%3A%23e3d2d2%7D" rel="stylesheet" type="text/css" />
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#header {
+text-align: center;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
 
 </head>
 
@@ -70,20 +302,24 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Package timevis</h1>
 <h4 class="author"><em>Dean Attali</em></h4>
-<h4 class="date"><em>2016-09-16</em></h4>
+<h4 class="date"><em>2019-01-16</em></h4>
 
 
 
 <div id="timevis---create-interactive-timeline-visualizations-in-r" class="section level1">
 <h1>timevis - Create interactive timeline visualizations in R</h1>
-<p><a href="https://travis-ci.org/daattali/timevis"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5MCIgaGVpZ2h0PSIyMCI+PGxpbmVhckdyYWRpZW50IGlkPSJhIiB4Mj0iMCIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2JiYiIgc3RvcC1vcGFjaXR5PSIuMSIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1vcGFjaXR5PSIuMSIvPjwvbGluZWFyR3JhZGllbnQ+PHJlY3Qgcng9IjMiIHdpZHRoPSI5MCIgaGVpZ2h0PSIyMCIgZmlsbD0iIzU1NSIvPjxyZWN0IHJ4PSIzIiB4PSIzNyIgd2lkdGg9IjUzIiBoZWlnaHQ9IjIwIiBmaWxsPSIjNGMxIi8+PHBhdGggZmlsbD0iIzRjMSIgZD0iTTM3IDBoNHYyMGgtNHoiLz48cmVjdCByeD0iMyIgd2lkdGg9IjkwIiBoZWlnaHQ9IjIwIiBmaWxsPSJ1cmwoI2EpIi8+PGcgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zLFZlcmRhbmEsR2VuZXZhLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiPjx0ZXh0IHg9IjE5LjUiIHk9IjE1IiBmaWxsPSIjMDEwMTAxIiBmaWxsLW9wYWNpdHk9Ii4zIj5idWlsZDwvdGV4dD48dGV4dCB4PSIxOS41IiB5PSIxNCI+YnVpbGQ8L3RleHQ+PHRleHQgeD0iNjIuNSIgeT0iMTUiIGZpbGw9IiMwMTAxMDEiIGZpbGwtb3BhY2l0eT0iLjMiPnBhc3Npbmc8L3RleHQ+PHRleHQgeD0iNjIuNSIgeT0iMTQiPnBhc3Npbmc8L3RleHQ+PC9nPjwvc3ZnPg==" alt="Build Status" /></a> <a href="https://cran.r-project.org/package=timevis"><img src="data:image/svg+xml; charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI3MSIgaGVpZ2h0PSIyMCI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiIiB4Mj0iMCIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYmJiIiBzdG9wLW9wYWNpdHk9Ii4xIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEiIHN0b3Atb3BhY2l0eT0iLjEiLz4KICA8L2xpbmVhckdyYWRpZW50PgogIDxtYXNrIGlkPSJhIj4KICAgIDxyZWN0IHdpZHRoPSI3MSIgaGVpZ2h0PSIyMCIgcng9IjMiIGZpbGw9IiNmZmYiLz4KICA8L21hc2s+CiAgPGcgbWFzaz0idXJsKCNhKSI+CiAgICA8cGF0aCBmaWxsPSIjNTU1IiBkPSJNMCAwaDQzdjIwSDB6Ii8+CiAgICA8cGF0aCBmaWxsPSIjNGMxIiBkPSJNNDMgMGg1NHYyMEg0M3oiLz4KICAgIDxwYXRoIGZpbGw9InVybCgjYikiIGQ9Ik0wIDBoNzF2MjBIMHoiLz4KICA8L2c+CiAgPGcgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIKICAgICBmb250LWZhbWlseT0iRGVqYVZ1IFNhbnMsVmVyZGFuYSxHZW5ldmEsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSI+CiAgICA8dGV4dCB4PSIyMS41IiB5PSIxNSIgZmlsbD0iIzAxMDEwMSIgZmlsbC1vcGFjaXR5PSIuMyI+CiAgICAgIENSQU4KICAgIDwvdGV4dD4KICAgIDx0ZXh0IHg9IjIxLjUiIHk9IjE0Ij4KICAgICAgQ1JBTgogICAgPC90ZXh0PgogICAgPHRleHQgeD0iNTYiIHk9IjE1IiBmaWxsPSIjMDEwMTAxIiBmaWxsLW9wYWNpdHk9Ii4zIj4KICAgICAgMC4zCiAgICA8L3RleHQ+CiAgICA8dGV4dCB4PSI1NiIgeT0iMTQiPgogICAgICAwLjMKICAgIDwvdGV4dD4KICA8L2c+Cjwvc3ZnPg==" alt="CRAN version" /></a></p>
+<p><a href="https://www.paypal.me/daattali"><img src="data:image/png;base64,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" alt="Donate" /></a> <a href="https://travis-ci.org/daattali/timevis"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5MCIgaGVpZ2h0PSIyMCI+PGxpbmVhckdyYWRpZW50IGlkPSJhIiB4Mj0iMCIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2JiYiIgc3RvcC1vcGFjaXR5PSIuMSIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1vcGFjaXR5PSIuMSIvPjwvbGluZWFyR3JhZGllbnQ+PHJlY3Qgcng9IjMiIHdpZHRoPSI5MCIgaGVpZ2h0PSIyMCIgZmlsbD0iIzU1NSIvPjxyZWN0IHJ4PSIzIiB4PSIzNyIgd2lkdGg9IjUzIiBoZWlnaHQ9IjIwIiBmaWxsPSIjNGMxIi8+PHBhdGggZmlsbD0iIzRjMSIgZD0iTTM3IDBoNHYyMGgtNHoiLz48cmVjdCByeD0iMyIgd2lkdGg9IjkwIiBoZWlnaHQ9IjIwIiBmaWxsPSJ1cmwoI2EpIi8+PGcgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zLFZlcmRhbmEsR2VuZXZhLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiPjx0ZXh0IHg9IjE5LjUiIHk9IjE1IiBmaWxsPSIjMDEwMTAxIiBmaWxsLW9wYWNpdHk9Ii4zIj5idWlsZDwvdGV4dD48dGV4dCB4PSIxOS41IiB5PSIxNCI+YnVpbGQ8L3RleHQ+PHRleHQgeD0iNjIuNSIgeT0iMTUiIGZpbGw9IiMwMTAxMDEiIGZpbGwtb3BhY2l0eT0iLjMiPnBhc3Npbmc8L3RleHQ+PHRleHQgeD0iNjIuNSIgeT0iMTQiPnBhc3Npbmc8L3RleHQ+PC9nPjwvc3ZnPg==" alt="Build Status" /></a> <a href="https://cran.r-project.org/package=timevis"><img src="data:image/svg+xml; charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI3NiIgaGVpZ2h0PSIyMCI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiIiB4Mj0iMCIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYmJiIiBzdG9wLW9wYWNpdHk9Ii4xIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEiIHN0b3Atb3BhY2l0eT0iLjEiLz4KICA8L2xpbmVhckdyYWRpZW50PgogIDxtYXNrIGlkPSJhIj4KICAgIDxyZWN0IHdpZHRoPSI3NiIgaGVpZ2h0PSIyMCIgcng9IjMiIGZpbGw9IiNmZmYiLz4KICA8L21hc2s+CiAgPGcgbWFzaz0idXJsKCNhKSI+CiAgICA8cGF0aCBmaWxsPSIjNTU1IiBkPSJNMCAwaDQzdjIwSDB6Ii8+CiAgICA8cGF0aCBmaWxsPSIjNGMxIiBkPSJNNDMgMGg1Mi41djIwSDQzeiIvPgogICAgPHBhdGggZmlsbD0idXJsKCNiKSIgZD0iTTAgMGg3NnYyMEgweiIvPgogIDwvZz4KICA8ZyBmaWxsPSIjZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIgogICAgIGZvbnQtZmFtaWx5PSJEZWphVnUgU2FucyxWZXJkYW5hLEdlbmV2YSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIj4KICAgIDx0ZXh0IHg9IjIxLjUiIHk9IjE1IiBmaWxsPSIjMDEwMTAxIiBmaWxsLW9wYWNpdHk9Ii4zIj4KICAgICAgQ1JBTgogICAgPC90ZXh0PgogICAgPHRleHQgeD0iMjEuNSIgeT0iMTQiPgogICAgICBDUkFOCiAgICA8L3RleHQ+CiAgICA8dGV4dCB4PSI1OC41IiB5PSIxNSIgZmlsbD0iIzAxMDEwMSIgZmlsbC1vcGFjaXR5PSIuMyI+CiAgICAgIDAuNAogICAgPC90ZXh0PgogICAgPHRleHQgeD0iNTguNSIgeT0iMTQiPgogICAgICAwLjQKICAgIDwvdGV4dD4KICA8L2c+Cjwvc3ZnPg==" alt="CRAN version" /></a></p>
 <blockquote>
-<p><em>Copyright 2016 <a href="http://deanattali.com">Dean Attali</a>. Licensed under the MIT license.</em></p>
+<p><em>Copyright 2016 <a href="https://deanattali.com">Dean Attali</a>. Licensed under the MIT license.</em></p>
 </blockquote>
 <p><code>timevis</code> lets you create rich and <em>fully interactive</em> timeline visualizations in R. Timelines can be included in Shiny apps and R markdown documents, or viewed from the R console and RStudio Viewer. <code>timevis</code> includes an extensive API to manipulate a timeline after creation, and supports getting data out of the visualization into R. This package is based on the <a href="http://visjs.org/">vis.js</a> Timeline module and the <a href="http://www.htmlwidgets.org/">htmlwidgets</a> R package.</p>
+<p><strong>timevis is one of my many pet projects, but maintaining it and responding to daily questions has become very time consuming. If you find timevis useful, please consider showing your support :)</strong></p>
+<p align="center">
+<a href="https://www.paypal.me/daattali"> <img src="data:image/gif;base64,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" /> </a>
+</p>
 <div id="demo" class="section level2">
 <h2>Demo</h2>
-<p><a href="http://daattali.com/shiny/timevis-demo/">Click here</a> to view a live interactive demo of <code>timevis</code>.</p>
+<p><a href="https://daattali.com/shiny/timevis-demo/">Click here</a> to view a live interactive demo of <code>timevis</code>.</p>
 </div>
 <div id="table-of-contents" class="section level2">
 <h2>Table of contents</h2>
@@ -104,29 +340,29 @@ Installation
 </h2>
 <p><code>timevis</code> is available through both CRAN and GitHub:</p>
 <p>To install the stable CRAN version:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;timevis&quot;</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">&quot;timevis&quot;</span>)</a></code></pre></div>
 <p>To install the latest development version from GitHub:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)
-devtools::<span class="kw">install_github</span>(<span class="st">&quot;daattali/timevis&quot;</span>)</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;daattali/timevis&quot;</span>)</a></code></pre></div>
 <h2 id="usage">
 How to use
 </h2>
 <p>You can view a minimal timeline without any data by simply running</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(timevis)
-<span class="kw">timevis</span>()</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(timevis)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">timevis</span>()</a></code></pre></div>
 <div class="figure">
 <img src="data:image/png;base64,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" alt="Minimal timeline" />
 <p class="caption">Minimal timeline</p>
 </div>
 <p>You can add data to the timeline by supplying a data.frame</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
-  <span class="dt">id      =</span> <span class="dv">1</span>:<span class="dv">4</span>,
-  <span class="dt">content =</span> <span class="kw">c</span>(<span class="st">&quot;Item one&quot;</span>  , <span class="st">&quot;Item two&quot;</span>  ,<span class="st">&quot;Ranged item&quot;</span>, <span class="st">&quot;Item four&quot;</span>),
-  <span class="dt">start   =</span> <span class="kw">c</span>(<span class="st">&quot;2016-01-10&quot;</span>, <span class="st">&quot;2016-01-11&quot;</span>, <span class="st">&quot;2016-01-20&quot;</span>, <span class="st">&quot;2016-02-14 15:00:00&quot;</span>),
-  <span class="dt">end     =</span> <span class="kw">c</span>(<span class="ot">NA</span>          ,           <span class="ot">NA</span>, <span class="st">&quot;2016-02-04&quot;</span>, <span class="ot">NA</span>)
-)
-
-<span class="kw">timevis</span>(data)</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">  <span class="dt">id      =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>,</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">  <span class="dt">content =</span> <span class="kw">c</span>(<span class="st">&quot;Item one&quot;</span>  , <span class="st">&quot;Item two&quot;</span>  ,<span class="st">&quot;Ranged item&quot;</span>, <span class="st">&quot;Item four&quot;</span>),</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">  <span class="dt">start   =</span> <span class="kw">c</span>(<span class="st">&quot;2016-01-10&quot;</span>, <span class="st">&quot;2016-01-11&quot;</span>, <span class="st">&quot;2016-01-20&quot;</span>, <span class="st">&quot;2016-02-14 15:00:00&quot;</span>),</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">  <span class="dt">end     =</span> <span class="kw">c</span>(<span class="ot">NA</span>          ,           <span class="ot">NA</span>, <span class="st">&quot;2016-02-04&quot;</span>, <span class="ot">NA</span>)</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">)</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="kw">timevis</span>(data)</a></code></pre></div>
 <div class="figure">
 <img src="data:image/png;base64,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" alt="Basic timeline" />
 <p class="caption">Basic timeline</p>
@@ -214,8 +450,9 @@ Retrieving data from the widget
 <li><strong>input$mytime_window</strong> - will return a 2-element vector containing the minimum and maximum dates currently visible in the timeline. The input is updated every time the viewable window of dates is updated (by zooming or moving the window).</li>
 </ul>
 <hr />
-<p>You can view examples of many of the features supported by checking out the <a href="http://daattali.com/shiny/timevis-demo/">demo Shiny app</a>. If you want to see how those examples were created, the full code for the examples is inside <a href="https://github.com/daattali/timevis/tree/master/inst/example">inst/example</a>.</p>
-<p>If you create any cool timelines that you’d like to share with me, or if you want to get in touch with me for any reason, feel free to <a href="http://deanattali.com/contact">contact me</a>!</p>
+<p>You can view examples of many of the features supported by checking out the <a href="https://daattali.com/shiny/timevis-demo/">demo Shiny app</a>. If you want to see how those examples were created, the full code for the examples is inside <a href="https://github.com/daattali/timevis/tree/master/inst/example">inst/example</a>.</p>
+<p>If you create any cool timelines that you’d like to share with me, or if you want to get in touch with me for any reason, feel free to <a href="https://deanattali.com/contact">contact me</a>!</p>
+<p>Lastly, if you want to learn how to develop an htmlwidget to have similar features as this package, you can check out the <a href="https://github.com/daattali/timevisBasic"><code>timevisBasic</code></a> package or <a href="https://deanattali.com/blog/advanced-htmlwidgets-tips">my tutorial on htmlwidgets tips</a>.</p>
 </div>
 </div>
 </div>
@@ -227,7 +464,7 @@ Retrieving data from the widget
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>

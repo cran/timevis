@@ -45,6 +45,9 @@
 #' automatically.
 #' @param elementId Use an explicit element ID for the widget (rather than an
 #' automatically generated one). Ignored when used in a Shiny app.
+#' @param loadDependencies Whether to load JQuery and bootstrap
+#' dependencies (you should only set to \code{FALSE} if you manually include
+#' them)
 #' @return A timeline visualization \code{htmlwidgets} object
 #' @section Data format:
 #' The \code{data} parameter supplies the input dataframe that describes the
@@ -145,6 +148,15 @@
 #' }
 #' All four inputs will return a value upon initialization of the timeline and
 #' every time the corresponding value is updated.
+#' @section Extending timevis:
+#' If you need to perform any actions on the timeline object that are not
+#' supported by this package's API, you may be able to do so by manipulating the
+#' timeline's JavaScript object directly. The timeline object is available via
+#' \code{document.getElementById(id).widget.timeline} (replace \code{id} with
+#' the timeline's id).\cr\cr
+#' This timeline object is the direct widget that \code{vis.js} creates, and you
+#' can see the \href{http://visjs.org/docs/timeline/}{visjs documentation} to
+#' see what actions you can perform on that object.
 #' @examples
 #' # For more examples, see http://daattali.com/shiny/timevis-demo/
 #'
@@ -267,7 +279,8 @@
 #' @seealso \href{http://daattali.com/shiny/timevis-demo/}{Demo Shiny app}
 #' @export
 timevis <- function(data, groups, showZoom = TRUE, zoomFactor = 0.5, fit = TRUE,
-                    options, width = NULL, height = NULL, elementId = NULL) {
+                    options, width = NULL, height = NULL, elementId = NULL,
+                    loadDependencies = TRUE) {
 
   # Validate the input data
   if (missing(data)) {
@@ -334,10 +347,14 @@ timevis <- function(data, groups, showZoom = TRUE, zoomFactor = 0.5, fit = TRUE,
   x$api <- list()
 
   # add dependencies so that the zoom buttons will work in non-Shiny mode
-  deps <- list(
-    rmarkdown::html_dependency_jquery(),
-    rmarkdown::html_dependency_bootstrap("default")
-  )
+  if (loadDependencies) {
+    deps <- list(
+      rmarkdown::html_dependency_jquery(),
+      rmarkdown::html_dependency_bootstrap("default")
+    )
+  } else {
+    deps <- NULL
+  }
 
   # create widget
   htmlwidgets::createWidget(
