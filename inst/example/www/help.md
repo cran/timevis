@@ -1,13 +1,3 @@
-# {timevis} - Create interactive timeline visualizations in R
-
-[![Build
-Status](https://travis-ci.org/daattali/timevis.svg?branch=master)](https://travis-ci.org/daattali/timevis)
-[![CRAN
-version](https://www.r-pkg.org/badges/version/timevis)](https://cran.r-project.org/package=timevis)
-
-> By [Dean Attali](https://deanattali.com) ·
-> [Demo](https://daattali.com/shiny/timevis-demo)
-
 {timevis} lets you create rich and *fully interactive* timeline
 visualizations in R. Timelines can be included in Shiny apps and R
 markdown documents, or viewed from the R console and RStudio Viewer.
@@ -19,16 +9,13 @@ JavaScript library.
 **Need Shiny help? [I’m available for
 consulting](https://attalitech.com/).**<br/> **If you find {timevis}
 useful, please consider [supporting my
-work](https://github.com/sponsors/daattali) to unlock rewards\! ❤**
+work](https://github.com/sponsors/daattali)
+to unlock rewards\! ❤**
 
 <p align="center">
 
 <a style="display: inline-block;" href="https://github.com/sponsors/daattali">
 <img height="35" src="https://i.imgur.com/034B8vq.png" /> </a>
-
-<a style="display: inline-block;" href="https://paypal.me/daattali">
-<img height="35" src="https://camo.githubusercontent.com/0e9e5cac101f7093336b4589c380ab5dcfdcbab0/68747470733a2f2f63646e2e6a7364656c6976722e6e65742f67682f74776f6c66736f6e2f70617970616c2d6769746875622d627574746f6e40312e302e302f646973742f627574746f6e2e737667" />
-</a>
 
 </p>
 
@@ -41,7 +28,6 @@ interactive demo of {timevis}.
 
   - [Installation](#install)
   - [How to use](#usage)
-  - [Slightly more advanced examples](#advanced-examples)
   - [Interactivity](#interactivity)
   - [Groups](#groups)
   - [Functions to manipulate a timeline](#manipulate-api)
@@ -83,8 +69,6 @@ library(timevis)
 timevis()
 ```
 
-![Minimal timeline](inst/img/minimal.png)
-
 You can add data to the timeline by supplying a data.frame
 
 ``` r
@@ -98,36 +82,12 @@ data <- data.frame(
 timevis(data)
 ```
 
-![Basic timeline](inst/img/basic.png)
-
 Every item must have a `content` and a `start` variable. If the item is
 a range rather than a single point in time, you can supply an `end` as
 well. `id` is only required if you want to access or manipulate an item.
 There are more variables that can be used in the data.frame – they are
 all documented in the help file for `?timevis()` under the **Data
 format** section.
-
-<h2 id="advanced-examples">
-
-Slightly more advanced examples
-
-</h2>
-
-The content of an item can even include HTML, which makes it easy to
-show any kind of data in a timeline, such as the matches of the 2014
-World Cup:
-
-![World cup timeline](inst/img/worldcup.png)
-
-If you know some CSS, you can completely customize the look of the
-timeline:
-
-![Custom style timeline](inst/img/customstyle.png)
-
-By default, a timeline will show the current date as a red vertical line
-and will have zoom in/out buttons. You can supply many customization
-options to `timevis()` in order to get it just right (see `?timevis()`
-for details).
 
 <h2 id="interactivity">
 
@@ -156,11 +116,6 @@ names. Grouping items can be useful for a wide range of applications,
 for example when showing availability of multiple people, rooms, or
 other resources next to each other. You can also think of groups as
 “adding a Y axis”, if that helps.
-
-Here is an example of a timeline that has three groups: “Library”,
-“Gym”, and “Pool”:
-
-![Groups timeline](inst/img/groups.png)
 
 In order to use groups, items in the data need to have group ids, and a
 separate dataframe containing the group information needs to be
@@ -271,8 +226,8 @@ input variables will be available:
     the minimum and maximum dates currently visible in the timeline. The
     input is updated every time the viewable window of dates is updated
     (by zooming or moving the window).
-  - **input$mytime\_visible** - will return a list of IDs of items
-    currently visible in the timeline.
+  - **input$mytime\_visible** - will return a list of IDs of items currently
+    visible in the timeline.
 
 <h2 id="sponsors">
 
@@ -286,12 +241,6 @@ Sponsors 🏆
 {timevis}\!](https://github.com/sponsors/daattali/sponsorships?tier_id=39856)
 
 -----
-
-You can view examples of many of the features supported by checking out
-the [demo Shiny app](https://daattali.com/shiny/timevis-demo/). If you
-want to see how those examples were created, the full code for the
-examples is inside
-[inst/example](https://github.com/daattali/timevis/tree/master/inst/example).
 
 If you create any cool timelines that you’d like to share with me, or if
 you want to get in touch with me for any reason, feel free to [contact

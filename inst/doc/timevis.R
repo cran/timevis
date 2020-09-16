@@ -1,18 +1,18 @@
-## ----setup, echo = FALSE, message = FALSE--------------------------------
+## ----setup, echo = FALSE, message = FALSE-------------------------------------
 knitr::opts_chunk$set(tidy = FALSE, comment = "#>")
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  install.packages("timevis")
 
-## ----eval=FALSE----------------------------------------------------------
-#  install.packages("devtools")
-#  devtools::install_github("daattali/timevis")
+## ----eval=FALSE---------------------------------------------------------------
+#  install.packages("remotes")
+#  remotes::install_github("daattali/timevis")
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  library(timevis)
 #  timevis()
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  data <- data.frame(
 #    id      = 1:4,
 #    content = c("Item one"  , "Item two"  ,"Ranged item", "Item four"),

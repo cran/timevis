@@ -3,12 +3,13 @@ library(timevis)
 source("ui-helpers.R")
 
 fluidPage(
+  shinydisconnect::disconnectMessage2(),
   title = "timevis - An R package for creating timeline visualizations",
   tags$head(
     tags$link(href = "style.css", rel = "stylesheet"),
 
     # Favicon
-    tags$link(rel = "shortcut icon", type="image/x-icon", href="http://daattali.com/shiny/img/favicon.ico"),
+    tags$link(rel = "shortcut icon", type="image/x-icon", href="https://daattali.com/shiny/img/favicon.ico"),
 
     # Facebook OpenGraph tags
     tags$meta(property = "og:title", content = share$title),
@@ -18,7 +19,7 @@ fluidPage(
     tags$meta(property = "og:description", content = share$description),
 
     # Twitter summary cards
-    tags$meta(name = "twitter:card", content = "summary"),
+    tags$meta(name = "twitter:card", content = "summary_large_image"),
     tags$meta(name = "twitter:site", content = paste0("@", share$twitter_user)),
     tags$meta(name = "twitter:creator", content = paste0("@", share$twitter_user)),
     tags$meta(name = "twitter:title", content = share$title),
@@ -39,12 +40,12 @@ fluidPage(
         "An R package for creating timeline visualizations"),
     div(id = "subsubtitle",
         "By",
-        tags$a(href = "http://deanattali.com/", "Dean Attali"),
+        tags$a(href = "https://deanattali.com/", "Dean Attali"),
         HTML("&bull;"),
         "Available",
         tags$a(href = "https://github.com/daattali/timevis", "on GitHub"),
         HTML("&bull;"),
-        tags$a(href = "http://daattali.com/shiny/", "More apps"), "by Dean"
+        tags$a(href = "https://github.com/sponsors/daattali", "Support my work"), "❤"
     )
   ),
   tabsetPanel(
@@ -68,42 +69,22 @@ fluidPage(
             tags$pre(codeShiny)
           )
         )
-      ),
-      div(class = "sourcecode",
-        "The exact code for all the timelines in this app is",
-        tags$a(href = "https://github.com/daattali/timevis/tree/master/inst/example",
-               "on GitHub")
       )
     ),
 
     tabPanel(
       div(icon("cog"), "Custom style"),
-      timevisOutput("timelineCustom"),
-      div(class = "sourcecode",
-          "The exact code for all the timelines in this app is",
-          tags$a(href = "https://github.com/daattali/timevis/tree/master/inst/example",
-                 "on GitHub")
-      )
+      timevisOutput("timelineCustom")
     ),
 
     tabPanel(
       div(icon("trophy"), "World Cup 2014"),
-      timevisOutput("timelineWC"),
-      div(class = "sourcecode",
-          "The exact code for all the timelines in this app is",
-          tags$a(href = "https://github.com/daattali/timevis/tree/master/inst/example",
-                 "on GitHub")
-      )
+      timevisOutput("timelineWC")
     ),
 
     tabPanel(
       div(icon("users"), "Groups"),
-      timevisOutput("timelineGroups"),
-      div(class = "sourcecode",
-          "The exact code for all the timelines in this app is",
-          tags$a(href = "https://github.com/daattali/timevis/tree/master/inst/example",
-                 "on GitHub")
-      )
+      timevisOutput("timelineGroups")
     ),
 
     tabPanel(
@@ -166,15 +147,21 @@ fluidPage(
              div(tags$strong("Visible window:"),
                  textOutput("window", inline = TRUE)),
              div(tags$strong("Selected items:"),
-                 textOutput("selected", inline = TRUE))
+                 textOutput("selected", inline = TRUE)),
+             div(tags$strong("Visible items:"),
+                 textOutput("visible", inline = TRUE)),
            )
         )
-      ),
-      div(class = "sourcecode",
-          "The exact code for all the timelines in this app is",
-          tags$a(href = "https://github.com/daattali/timevis/tree/master/inst/example",
-                 "on GitHub")
       )
+    ),
+    tabPanel(
+      div(icon("question"), "Usage"),
+      div(id = "usage-tab", includeMarkdown("www/help.md"))
     )
+  ),
+  div(class = "sourcecode",
+      "The exact code for all the timelines in this app is",
+      tags$a(href = "https://github.com/daattali/timevis/tree/master/inst/example",
+             "on GitHub")
   )
 )
