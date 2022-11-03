@@ -13,7 +13,11 @@ function(input, output, session) {
   })
 
   output$timelineGroups <- renderTimevis({
-    timevis(data = timevisData, groups = timevisDataGroups, options = list(editable = TRUE))
+    groups <- timevisDataGroups
+    if (input$nested) {
+      groups$nestedGroups <- I(list(NA, list("sauna", "tub"), NA, NA))
+    }
+    timevis(data = timevisData, groups = groups, options = list(editable = TRUE))
   })
 
   output$timelineCustom <- renderTimevis({
@@ -96,5 +100,11 @@ function(input, output, session) {
   })
   observeEvent(input$addTime, {
     addCustomTime("timelineInteractive", "2016-01-17", randomID())
+  })
+  observeEvent(input$zoomIn, {
+    zoomIn("timelineInteractive", input$zoomBy, animation = input$animate)
+  })
+  observeEvent(input$zoomOut, {
+    zoomOut("timelineInteractive", input$zoomBy, animation = input$animate)
   })
 }

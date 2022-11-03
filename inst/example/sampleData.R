@@ -6,6 +6,16 @@ dataBasic <- data.frame(
   end    = c(NA, NA, "2016-02-04", NA)
 )
 
+countryToCode <- list(
+  "Argentina" = "ar",
+  "Belgium" = "be",
+  "Brazil" = "br",
+  "Colombia" = "co",
+  "Costa Rica" = "cr",
+  "France" = "fr",
+  "Germany" = "de",
+  "Netherlands" = "nl"
+)
 
 # Template for world cup HTML of each item
 templateWC <- function(stage, team1, team2, score1, score2) {
@@ -18,13 +28,12 @@ templateWC <- function(stage, team1, team2, score1, score2) {
         <td>%s</td>
       </tr>
       <tr>
-        <td><img src="flags/%s.png" width="31" height="20" alt="%s"></td>
+        <td><img src="https://flagpedia.net/data/flags/mini/%s.png" width="31" height="20" alt="%s"></td>
         <th></th>
-        <td><img src="flags/%s.png" width="31" height="20" alt="%s"></td>
+        <td><img src="https://flagpedia.net/data/flags/mini/%s.png" width="31" height="20" alt="%s"></td>
       </tr>
     </tbody></table>',
-    stage, team1, score1, score2, team2, gsub("\\s", "", tolower(team1)),
-    team1, gsub("\\s", "", tolower(team2)), team2
+    stage, team1, score1, score2, team2, countryToCode[[team1]], team1, countryToCode[[team2]], team2
   )
 }
 
@@ -53,25 +62,31 @@ dataWC <- data.frame(
 
 # Data for groups example (this data also gets exported in the package)
 timevisData <- data.frame(
-  id = 1:11,
-  content = c("Open", "Open",
-              "Open", "Open", "Half price entry",
-              "Staff meeting", "Open", "Adults only", "Open", "Hot tub closes",
-              "Siesta"),
-  start = c("2016-05-01 07:30:00", "2016-05-01 14:00:00",
-            "2016-05-01 06:00:00", "2016-05-01 14:00:00", "2016-05-01 08:00:00",
-            "2016-05-01 08:00:00", "2016-05-01 08:30:00", "2016-05-01 14:00:00",
-            "2016-05-01 16:00:00", "2016-05-01 19:30:00",
-            "2016-05-01 12:00:00"),
-  end   = c("2016-05-01 12:00:00", "2016-05-01 20:00:00",
-            "2016-05-01 12:00:00", "2016-05-01 22:00:00", "2016-05-01 10:00:00",
-            "2016-05-01 08:30:00", "2016-05-01 12:00:00", "2016-05-01 16:00:00",
-            "2016-05-01 20:00:00", NA,
-            "2016-05-01 14:00:00"),
-  group = c(rep("lib", 2), rep("gym", 3), rep("pool", 5), NA),
-  type = c(rep("range", 9), "point", "background")
+  id = 1:14,
+  content = c(
+    "Open", "Open", "Half price entry",
+    "Open", "Adults only", "Open", "Staff meeting",
+    "Open", "Men only", "Women only", "Open",
+    "Hot water", "Very hot water",
+    "Siesta"),
+  start = c(
+    "2016-05-01 06:00:00", "2016-05-01 14:00:00", "2016-05-01 08:00:00",
+    "2016-05-01 08:00:00", "2016-05-01 14:00:00",
+    "2016-05-01 16:00:00", "2016-05-01 19:30:00",
+    "2016-05-01 08:00:00", "2016-05-01 14:00:00", "2016-05-01 16:00:00", "2016-05-01 18:00:00",
+    "2016-05-01 09:00:00", "2016-05-01 14:00:00",
+    "2016-05-01 12:00:00"),
+  end   = c(
+    "2016-05-01 12:00:00", "2016-05-01 22:00:00", "2016-05-01 10:00:00",
+    "2016-05-01 12:00:00", "2016-05-01 16:00:00",
+    "2016-05-01 20:00:00", NA,
+    "2016-05-01 12:00:00", "2016-05-01 16:00:00", "2016-05-01 18:00:00", "2016-05-01 20:00:00",
+    "2016-05-01 12:00:00", "2016-05-01 17:00:00",
+    "2016-05-01 14:00:00"),
+  group = c(rep("gym", 3), rep("pool", 4), rep("sauna", 4), rep("tub", 2), NA),
+  type = c(rep("range", 6), "point", rep("range", 6), "background")
 )
 timevisDataGroups <- data.frame(
-  id = c("lib", "gym", "pool"),
-  content = c("Library", "Gym", "Pool")
+  id = c("gym", "pool", "sauna", "tub"),
+  content = c("Gym", "Pool", "Sauna", "Hot Tub")
 )

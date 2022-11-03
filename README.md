@@ -25,11 +25,11 @@ by <a href="https://deanattali.com">Dean Attali</a>
 <img src="inst/img/hex.png" width="170" align="right"/>
 
 {timevis} lets you create rich and *fully interactive* timeline
-visualizations in R. Timelines can be included in Shiny apps and R
-markdown documents, or viewed from the R console and RStudio Viewer.
+visualizations in R. Timelines can be included in Shiny apps or R
+markdown documents.
 {timevis} includes an extensive API to manipulate a timeline after
 creation, and supports getting data out of the visualization into R.
-This package is based on the [visjs](https://visjs.org/) Timeline
+This package is based on the [visjs](https://visjs.github.io/vis-timeline/docs/timeline/) Timeline
 JavaScript library.
 
 **Need Shiny help? [I’m available for
@@ -111,12 +111,7 @@ work](https://github.com/sponsors/daattali) to unlock rewards\! ❤**
 [Click here](https://daattali.com/shiny/timevis-demo/) to view an
 interactive demo of many {timevis} features.
 
-Or check out examples from real users: [Pet Records by Jenna
-Allen](https://jennadallen.shinyapps.io/pet-records-app/), [Mohamad
-Ghassany’s life timeline](https://www.mghassany.com/blog/my-timetable/),
-[an English Premier League game
-timeline](https://vidigalbr.shinyapps.io/timevis_premier_league/). If
-you create a cool timeline with {timevis} and want to share it, I’d love
+If you create a cool timeline with {timevis}, I’d love
 to [hear about it](https://deanattali.com/contact/)\!
 
 <h2 id="sponsors">
@@ -147,15 +142,13 @@ Installation
 
 </h2>
 
-{timevis} is available through both CRAN and GitHub:
-
-To install the stable CRAN version:
+**For most users:** To install the stable CRAN version:
 
 ``` r
 install.packages("timevis")
 ```
 
-To install the latest development version from GitHub:
+**For advanced users:** To install the latest development version from GitHub:
 
 ``` r
 install.packages("remotes")
@@ -193,11 +186,17 @@ timevis(data)
 ![Basic timeline](inst/img/basic.png)
 
 Every item must have a `content` and a `start` variable. If the item is
-a range rather than a single point in time, you can supply an `end` as
+a time range rather than a single point in time, you can supply an `end` as
 well. `id` is only required if you want to access or manipulate an item.
+
 There are more variables that can be used in the data.frame – they are
 all documented in the help file for `?timevis()` under the **Data
 format** section.
+
+By default, a timeline will show the current date as a red vertical line
+and will have zoom in/out buttons. You can supply many customization
+options to `timevis()` in order to get it just right (see `?timevis()`
+for details).
 
 <h2 id="advanced-examples">
 
@@ -215,11 +214,6 @@ If you know some CSS, you can completely customize the look of the
 timeline:
 
 ![Custom style timeline](inst/img/customstyle.png)
-
-By default, a timeline will show the current date as a red vertical line
-and will have zoom in/out buttons. You can supply many customization
-options to `timevis()` in order to get it just right (see `?timevis()`
-for details).
 
 <h2 id="interactivity">
 
@@ -242,23 +236,28 @@ Groups
 </h2>
 
 You can use the groups feature to group together multiple items into
-different “buckets”. When using groups, all items with the same group
+"buckets". When using groups, all items with the same group
 are placed on one line. A vertical axis is displayed showing the group
 names. Grouping items can be useful for a wide range of applications,
 for example when showing availability of multiple people, rooms, or
 other resources next to each other. You can also think of groups as
-“adding a Y axis”, if that helps.
+"adding a Y axis".
 
-Here is an example of a timeline that has three groups: “Library”,
-“Gym”, and “Pool”:
+Here is an example of a timeline that has four groups: "Gym", "Pool", "Sauna", "Hot Tub":
 
 ![Groups timeline](inst/img/groups.png)
 
 In order to use groups, items in the data need to have group ids, and a
 separate dataframe containing the group information needs to be
-provided. More information about using groups and the groups dataframe
-is available in the help file for `?timevis()` under the **Groups**
+provided. More information about using groups is available in the help file for `?timevis()` under the **Groups**
 section.
+
+Groups can also contain nested groups. The next example is similar to the previous one, except
+"Sauna" and "Hot Tub" are now nested under "Pool":
+
+![Nested groups timeline](inst/img/nestedgroups.png)
+
+Refer to the [visjs Timeline](https://visjs.github.io/vis-timeline/docs/timeline/) documentation to see all the options that are supported.
 
 <h2 id="manipulate-api">
 
@@ -326,6 +325,12 @@ return value from these functions depend on the input: if a `timevis`
 object was given, then an updated `timevis` object is returned, and if
 an ID was given, then the same ID is returned.*
 
+### Extending timevis
+
+If you need to perform any actions on the timeline object that are not supported by the {timevis} API, you may be able to do so by manipulating the timeline's JavaScript object directly. The timeline object is available via `document.getElementById("id").widget.timeline` (replace `id` with the timeline's id).
+
+This timeline object is the direct widget that vis.js creates, and you can see the [visjs documentation](https://visjs.github.io/vis-timeline/docs/timeline/#Methods) to see what actions you can perform on that object.
+
 <h2 id="shiny-apps">
 
 In a Shiny app
@@ -345,7 +350,7 @@ It is possible to retrieve data from a timeline in a Shiny app. When a
 timeline widget is created in a Shiny app, there are four pieces of
 information that are always accessible as Shiny inputs. These inputs
 have special names based on the timeline’s id. Suppose that a timeline
-is created with an `outputId` of **“mytime”**, then the following four
+is created with an `outputId` of **"mytime"**, then the following four
 input variables will be available:
 
   - **input$mytime\_data** - will return a data.frame containing the

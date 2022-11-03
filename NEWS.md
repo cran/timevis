@@ -1,3 +1,10 @@
+# timevis 2.1.0 (2022-10-22)
+
+- Add functions `zoomIn()` and `zoomOut()`
+- List-columns can now be passed to `timevis()` in the `data` or `groups` dataframe, to support `nestedGroups` and any other parameters that may require nested lists (#11)
+- Boolean values can be passed to `timevis()` in the `data` or `groups` dataframe, to support `subgroupStack = TRUE` option (#117)
+- Simplify documentation and augment with more examples
+
 # timevis 2.0.0 (2021-12-20)
 
 - **BREAKING CHANGE** Upgrade to visjs-Timeline version 7.4.9 which includes many new features and performance improvements. You may notice some small differences in behaviour when upgrading as the new version includes 5 years of developments. (#50)
